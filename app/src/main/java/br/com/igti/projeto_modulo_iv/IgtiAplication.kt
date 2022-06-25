@@ -1,6 +1,7 @@
 package br.com.igti.projeto_modulo_iv
 
 import android.app.Application
+import br.com.igti.projeto_modulo_iv.data.remote.IAlunoRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,28 +16,6 @@ class IgtiAplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        val okHttpClient = OkHttpClient.Builder()
-            .connectTimeout(15L, TimeUnit.SECONDS)
-            .readTimeout(15L, TimeUnit.SECONDS)
-            .writeTimeout(15L, TimeUnit.SECONDS)
-            .addInterceptor(HttpLoggingInterceptor{ msg ->
-                println("LOG APP: $msg")
-            }.apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }).addNetworkInterceptor(HttpLoggingInterceptor{ msg ->
-                println("LOG NTW: $msg")
-            }.apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .build()
-
-        retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://igtiandroid.ddns.net:8080")
-            .client(okHttpClient)
-            .build()
-
     }
 
 }
