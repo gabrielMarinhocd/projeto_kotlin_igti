@@ -33,7 +33,7 @@ class IgtiAplication : Application() {
 
         retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://igtiandroid.ddns.net")
+            .baseUrl("http://igtiandroid.ddns.net:8080")
             .client(okHttpClient)
             .build()
 
