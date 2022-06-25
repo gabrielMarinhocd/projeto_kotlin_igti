@@ -2,5 +2,9 @@ package br.com.igti.projeto_modulo_iv.data.remote
 
 interface IAlunoRepository {
 
-    fun getAlunos() : List<String>
+    fun listarAlunos()
+    fun listarAlunoPorId()
+    fun cadastrarAluno()
+    fun alterarAluno()
+    fun excluirAluno()
 }
