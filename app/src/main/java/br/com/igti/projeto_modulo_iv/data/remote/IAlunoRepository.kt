@@ -4,7 +4,9 @@ import br.com.igti.projeto_modulo_iv.data.remote.dto.AlunoRequestDTO
 import br.com.igti.projeto_modulo_iv.data.remote.dto.AlunoResponseDTO
 import br.com.igti.projeto_modulo_iv.data.remote.dto.MessageDTO
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 interface IAlunoRepository {
 
@@ -14,7 +16,9 @@ interface IAlunoRepository {
     @GET("/alunos/{id}")
     fun listarAlunoPorId(): Call<AlunoResponseDTO>
 
-    fun cadastrarAluno()
+    @POST("/alunos/{id}")
+    fun cadastrarAluno(@Body aluno : AlunoRequestDTO): Call<AlunoResponseDTO>
+
     fun alterarAluno()
     fun excluirAluno()
 
