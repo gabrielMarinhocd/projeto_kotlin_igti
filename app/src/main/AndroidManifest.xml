@@ -3,12 +3,24 @@
     package="br.com.igti.projeto_modulo_iv">
 
     <application
+        android:name=".IgtiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".IgtiApplication"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Projeto_modulo_iv" />
+        android:theme="@style/Theme.Projeto_modulo_iv">
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:label="@string/title_activity_main"
+            android:theme="@style/Theme.Projeto_modulo_iv.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>
