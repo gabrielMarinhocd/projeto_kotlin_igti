@@ -13,16 +13,16 @@ interface IAlunoRepository {
     fun listarAlunos() : Call<List<AlunoResponseDTO>>
 
     @GET("/alunos/{id}")
-    fun listarAlunoPorId(): Call<AlunoResponseDTO>
+    fun listarAlunoPorId(@Path("id") id: String): Call<AlunoResponseDTO>
 
     @POST("/alunos/{id}")
     fun cadastrarAluno(@Body aluno : AlunoRequestDTO): Call<AlunoResponseDTO>
 
     @PUT("/alunos/{id}")
-    fun alterarAluno(@Body aluno : AlunoRequestDTO) : Call<AlunoResponseDTO>
+    fun alterarAluno(@Path("id") id: String, @Body aluno : AlunoRequestDTO) : Call<AlunoResponseDTO>
 
     @DELETE("/alunos/{id}")
-    fun excluirAluno() : Call<Response>
+    fun excluirAluno(@Path("id") id: String) : Call<Response>
 
     @GET("/helloworld")
     fun helloWorld(): Call<MessageDTO>
