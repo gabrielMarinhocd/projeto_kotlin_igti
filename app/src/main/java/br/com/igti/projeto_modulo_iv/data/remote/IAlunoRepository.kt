@@ -3,11 +3,9 @@ package br.com.igti.projeto_modulo_iv.data.remote
 import br.com.igti.projeto_modulo_iv.data.remote.dto.AlunoRequestDTO
 import br.com.igti.projeto_modulo_iv.data.remote.dto.AlunoResponseDTO
 import br.com.igti.projeto_modulo_iv.data.remote.dto.MessageDTO
+import okhttp3.Response
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface IAlunoRepository {
 
@@ -23,7 +21,8 @@ interface IAlunoRepository {
     @PUT("/alunos/{id}")
     fun alterarAluno(@Body aluno : AlunoRequestDTO) : Call<AlunoResponseDTO>
 
-    fun excluirAluno()
+    @DELETE("/alunos/{id}")
+    fun excluirAluno() : Call<Response>
 
     @GET("/helloworld")
     fun helloWorld(): Call<MessageDTO>
