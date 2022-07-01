@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -12,6 +13,7 @@ import br.com.igti.projeto_modulo_iv.R
 import br.com.igti.projeto_modulo_iv.databinding.ActivityMainBinding
 import br.com.igti.projeto_modulo_iv.viewmodel.AlunoViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
@@ -37,21 +39,16 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        /*alunoViewModel.listaAlunos.observe(lifecycleOwner, {lista ->
-            if(!listaisNullOrEmpty()){
-                exibirAlunos(lista)
-            }
-
-        })
-         */
-        /*runBlocking {
-            alunoViewModel.listaAlunosFlow.collect{lista ->
-                if(!lista.isNullOrEmpty()){
-                    exibirAlunos(lista)
+        alunoViewModel.listarAlunos()
+        lifecycleScope.launch{
+            alunoViewModel.listaAlunosFlow.collect{ lista ->
+                if (!lista.isNullOrEmpty()){
+                    lista.map {
+                        print(it)
+                    }
                 }
-
             }
-         */
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

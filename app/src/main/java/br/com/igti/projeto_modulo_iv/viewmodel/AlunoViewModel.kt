@@ -1,9 +1,12 @@
 package br.com.igti.projeto_modulo_iv.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.igti.projeto_modulo_iv.data.remote.AlunoRepository
+import br.com.igti.projeto_modulo_iv.data.remote.RetrofitClient
 import br.com.igti.projeto_modulo_iv.data.remote.dto.AlunoRequestDTO
 import br.com.igti.projeto_modulo_iv.data.remote.dto.AlunoResponseDTO
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,42 +15,42 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Response
 import java.time.LocalDate
 import java.time.LocalDateTime
+import javax.security.auth.callback.Callback
 
 class AlunoViewModel(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : ViewModel(
 ) {
 
-    private val _listaAlunos : MutableLiveData<List<AlunoResponseDTO>> = MutableLiveData()
-    val listaAlunos : LiveData<List<AlunoResponseDTO>> = _listaAlunos
+    private val repository: AlunoRepository = AlunoRepository(RetrofitClient())
 
     private val _listaAlunoFlow = MutableStateFlow<List<AlunoResponseDTO>>(listOf())
     val listaAlunosFlow : StateFlow<List<AlunoResponseDTO>> = _listaAlunoFlow
 
     fun listarAlunos(){
         viewModelScope.launch(dispatcher){
-        val listaDeAlunos = listOf(
-            AlunoResponseDTO(
-                "a123",
-                "Gabriel",
-                "Marinho",
-                LocalDate.parse("07-12-2001"),
-                LocalDateTime.now()
-            ),
-            AlunoResponseDTO(
-                "a123",
-                "Gabriel",
-                "Marinho",
-                LocalDate.parse("07-12-2001"),
-                LocalDateTime.now()
-            )
-        )
-        _listaAlunos.value = listaDeAlunos
-        _listaAlunoFlow.value = listaDeAlunos
-        //TODO Repository.get()
-        }
+            repository.listarAlunos().enqueue(object : retrofit2.Callback<List<AlunoResponseDTO>>{
+                override fun onResponse(
+                    call: Call<List<AlunoResponseDTO>>,
+                    response: Response<List<AlunoResponseDTO>>
+                ) {
+                    if (response.isSuccessful){
+                        response.body()?.let{
+                            _listaAlunoFlow.value = it
+                        }
+                    }
+                }
 
+                override fun onFailure(call: Call<List<AlunoResponseDTO>>, t: Throwable) {
+                    _listaAlunoFlow.value = listOf()
+                    Log.e(AlunoViewModel::class.java.name, t.toString())
+                }
+
+            })
+        }
     }
 
     fun listarAlunoPorId(id:String){

@@ -8,10 +8,9 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Path
 
-class AlunoRepository : IAlunoRepository{
-    override fun listarAlunos(): Call<List<AlunoResponseDTO>> {
-        TODO("Not yet implemented")
-    }
+class AlunoRepository(private  val retrofitClient: RetrofitClient) : IAlunoRepository{
+    override fun listarAlunos(): Call<List<AlunoResponseDTO>> =
+        retrofitClient.getInstance().getAlunoApi().listarAlunos()
 
     override fun listarAlunoPorId(@Path(value = "id") id: String): Call<AlunoResponseDTO> {
         TODO("Not yet implemented")
