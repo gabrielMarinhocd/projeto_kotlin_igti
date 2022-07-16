@@ -1,12 +1,17 @@
 package br.com.igti.projeto_modulo_iv.data.remote.dto
 
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class AlunoResponseDTO(
-    private val id : String,
-    private val nome : String,
-    private val sobrenome: String,
-    private val nascimento: LocalDate,
-    private val cadastro: LocalDateTime,
-)
+    @SerializedName("id")
+    val id : String,
+    @SerializedName("nome")
+    val nome : String,
+    @SerializedName("sobrenome")
+    val sobrenome: String,
+    @SerializedName("nascimento")
+    val nascimento: LocalDate,
+):Serializable

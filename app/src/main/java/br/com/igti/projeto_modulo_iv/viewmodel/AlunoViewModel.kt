@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.igti.projeto_modulo_iv.data.remote.AlunoRepository
+import br.com.igti.projeto_modulo_iv.data.remote.IAlunoRepository
 import br.com.igti.projeto_modulo_iv.data.remote.RetrofitClient
 import br.com.igti.projeto_modulo_iv.data.remote.dto.AlunoRequestDTO
 import br.com.igti.projeto_modulo_iv.data.remote.dto.AlunoResponseDTO
@@ -25,7 +26,7 @@ class AlunoViewModel(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO) : ViewModel(
 ) {
 
-    private val repository: AlunoRepository = AlunoRepository(RetrofitClient())
+    private val repository: IAlunoRepository = AlunoRepository(RetrofitClient())
 
     private val _listaAlunoFlow = MutableStateFlow<List<AlunoResponseDTO>>(listOf())
     val listaAlunosFlow : StateFlow<List<AlunoResponseDTO>> = _listaAlunoFlow
@@ -38,8 +39,8 @@ class AlunoViewModel(
                     response: Response<List<AlunoResponseDTO>>
                 ) {
                     if (response.isSuccessful){
-                        response.body()?.let{
-                            _listaAlunoFlow.value = it
+                        response.body()?.let{ list ->
+                            _listaAlunoFlow.value = list
                         }
                     }
                 }

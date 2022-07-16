@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="br.com.igti.projeto_modulo_iv">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -17,7 +18,8 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Projeto_modulo_iv.NoActionBar">
+            android:theme="@style/Theme.Projeto_modulo_iv.NoActionBar"
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
